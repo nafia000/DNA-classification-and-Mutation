@@ -1,0 +1,84 @@
+{
+  "project": {
+    "name": "DN-AI",
+    "description": "DNA Sequence Classification and Gene Mutation Detection using Machine Learning and Deep Learning",
+    "version": "1.0.0",
+    "author": "DN-AI Team"
+  },
+  "data": {
+    "input_file": "../synthetic_dna_dataset.csv",
+    "sequence_column": "Sequence",
+    "label_column": "Mutation_Flag",
+    "class_labels": {
+      "0": "No Mutation",
+      "1": "Mutation"
+    },
+    "test_size": 0.2,
+    "val_size": 0.1,
+    "random_state": 42
+  },
+  "feature_encoding": {
+    "max_sequence_length": 100,
+    "kmer_size": 3,
+    "encoding_methods": {
+      "ml": "hand-crafted features (nucleotide counts, GC content, k-mer frequencies)",
+      "dl": "one-hot encoding"
+    }
+  },
+  "models": {
+    "machine_learning": {
+      "svm": {
+        "hyperparameters": {
+          "C": [0.1, 1, 10, 100],
+          "kernel": ["rbf", "poly"],
+          "gamma": ["scale", "auto"]
+        },
+        "cv_folds": 5
+      },
+      "random_forest": {
+        "hyperparameters": {
+          "n_estimators": [100, 200, 300],
+          "max_depth": [10, 20, null],
+          "min_samples_split": [2, 5, 10],
+          "min_samples_leaf": [1, 2, 4]
+        },
+        "cv_folds": 5
+      }
+    },
+    "deep_learning": {
+      "cnn": {
+        "architecture": "Conv1D -> BatchNorm -> Conv1D -> MaxPool -> Dense -> Output",
+        "epochs": 50,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "dropout": 0.3
+      },
+      "lstm": {
+        "architecture": "LSTM -> BatchNorm -> LSTM -> LSTM -> Dense -> Output",
+        "epochs": 50,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "dropout": 0.3
+      }
+    }
+  },
+  "evaluation": {
+    "metrics": ["accuracy", "precision", "recall", "f1", "roc_auc"],
+    "cross_validation": 5,
+    "early_stopping_patience": 10,
+    "reduce_lr_patience": 5
+  },
+  "xai": {
+    "methods": ["feature_importance", "mutation_motif_identification", "SHAP", "LIME"],
+    "top_features": 20,
+    "top_motifs": 20,
+    "kmer_size_for_motifs": 3
+  },
+  "output": {
+    "models_dir": "../models/",
+    "results_dir": "../results/",
+    "save_plots": true,
+    "save_models": true,
+    "save_reports": true
+  }
+}
