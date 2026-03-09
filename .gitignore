@@ -1,3 +1,26 @@
+# ML model files
+*.pkl
+*.joblib
+*.h5
+*.pt
+
+# model folders
+models/
+model/
+dn_ai/models/
+
+# data
+*.csv
+*.txt
+data/
+datasets/
+
+# python cache
+__pycache__/
+*.pyc
+
+# node
+node_modules/
 # =========================
 # Machine Learning models
 # =========================
